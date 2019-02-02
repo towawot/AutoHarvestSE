@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="..\skse64\GameAPI.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\PapyrusVM.cpp">
+      <Filter>papyrus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\PapyrusValue.cpp">
+      <Filter>papyrus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\PapyrusNativeFunctions.cpp">
+      <Filter>papyrus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\PapyrusInterfaces.cpp">
+      <Filter>papyrus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\PapyrusArgs.cpp">
+      <Filter>papyrus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameEvents.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameFormComponents.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameForms.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameInput.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameObjects.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameData.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameReferences.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameRTTI.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameTypes.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameUtilities.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="papyrus.cpp" />
+    <ClCompile Include="..\skse64\GameExtraData.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameBSExtraData.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\HashUtil.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameSettings.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\ObScript.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameCamera.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\NiExtraData.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\NiNodes.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\NiObjects.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\NiTypes.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\NiRTTI.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\GameThreads.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="objects.cpp" />
+    <ClCompile Include="dataCase.cpp" />
+    <ClCompile Include="iniSettings.cpp" />
+    <ClCompile Include="events.cpp" />
+    <ClCompile Include="containerLister.cpp" />
+    <ClCompile Include="tasks.cpp" />
+    <ClCompile Include="..\skse64\GameStreams.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\Translation.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\ScaleformState.cpp">
+      <Filter>scaleform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\ScaleformTypes.cpp">
+      <Filter>scaleform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\skse64\ScaleformAPI.cpp">
+      <Filter>scaleform</Filter>
+    </ClCompile>
+    <ClCompile Include="AlchemyItemEx.cpp">
+      <Filter>_FormEx</Filter>
+    </ClCompile>
+    <ClCompile Include="EnchantmentItemEx.cpp">
+      <Filter>_FormEx</Filter>
+    </ClCompile>
+    <ClCompile Include="TESObjectARMOEx.cpp">
+      <Filter>_FormEx</Filter>
+    </ClCompile>
+    <ClCompile Include="TESObjectWEAPEx.cpp">
+      <Filter>_FormEx</Filter>
+    </ClCompile>
+    <ClCompile Include="TESQuestEx.cpp">
+      <Filter>_FormEx</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCellArrayEx.cpp">
+      <Filter>_FormEx</Filter>
+    </ClCompile>
+    <ClCompile Include="debugs.cpp">
+      <Filter>_Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="sound.cpp" />
+    <ClCompile Include="BaseExtraListEx.cpp">
+      <Filter>_FormEx</Filter>
+    </ClCompile>
+    <ClCompile Include="userlistUtil.cpp" />
+    <ClCompile Include="TESFormEx.cpp">
+      <Filter>_FormEx</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="..\skse64\GameAPI.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\PapyrusVM.h">
+      <Filter>papyrus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\PapyrusValue.h">
+      <Filter>papyrus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\PapyrusNativeFunctions.h">
+      <Filter>papyrus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\PapyrusInterfaces.h">
+      <Filter>papyrus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\PapyrusArgs.h">
+      <Filter>papyrus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameData.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameEvents.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameFormComponents.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameForms.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameInput.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameObjects.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameReferences.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameRTTI.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameTypes.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameUtilities.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="papyrus.h" />
+    <ClInclude Include="..\skse64\GameExtraData.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameBSExtraData.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\HashUtil.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameSettings.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\ObScript.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameCamera.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\NiExtraData.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\NiNodes.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\NiObjects.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\NiTypes.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\NiRTTI.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\GameThreads.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="objects.h" />
+    <ClInclude Include="dataCase.h" />
+    <ClInclude Include="iniSettings.h" />
+    <ClInclude Include="events.h" />
+    <ClInclude Include="containerLister.h" />
+    <ClInclude Include="tasks.h" />
+    <ClInclude Include="..\skse64\GameStreams.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\Translation.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\ScaleformState.h">
+      <Filter>scaleform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\ScaleformTypes.h">
+      <Filter>scaleform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\skse64\ScaleformAPI.h">
+      <Filter>scaleform</Filter>
+    </ClInclude>
+    <ClInclude Include="AlchemyItemEx.h">
+      <Filter>_FormEx</Filter>
+    </ClInclude>
+    <ClInclude Include="EnchantmentItemEx.h">
+      <Filter>_FormEx</Filter>
+    </ClInclude>
+    <ClInclude Include="TESObjectARMOEx.h">
+      <Filter>_FormEx</Filter>
+    </ClInclude>
+    <ClInclude Include="TESObjectWEAPEx.h">
+      <Filter>_FormEx</Filter>
+    </ClInclude>
+    <ClInclude Include="TESQuestEx.h">
+      <Filter>_FormEx</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCellArrayEx.h">
+      <Filter>_FormEx</Filter>
+    </ClInclude>
+    <ClInclude Include="debugs.h">
+      <Filter>_Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="strConv.h">
+      <Filter>_Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h" />
+    <ClInclude Include="BaseExtraListEx.h">
+      <Filter>_FormEx</Filter>
+    </ClInclude>
+    <ClInclude Include="userlistUtil.h" />
+    <ClInclude Include="TESFormEx.h">
+      <Filter>_FormEx</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{a4f07f14-48c8-4bcf-8c16-f1fb15526ea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="api">
+      <UniqueIdentifier>{99fb2a70-6ff0-4ee1-88a1-32819efcf128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="papyrus">
+      <UniqueIdentifier>{5c91dfe0-536b-4ac1-8195-c905ba003597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scaleform">
+      <UniqueIdentifier>{6dccdb94-8b64-448f-805f-3692117715e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_FormEx">
+      <UniqueIdentifier>{71f0c7fc-4d62-413e-afdf-5872914dd97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Utils">
+      <UniqueIdentifier>{3d5515fb-a938-4b89-89c8-a9bdc2656b3b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="exports.def">
+      <Filter>resources</Filter>
+    </None>
+  </ItemGroup>
+</Project>
