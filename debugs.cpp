@@ -66,7 +66,7 @@ void DumpExtraData(BSExtraData* extraData)
 		{
 			_MESSAGE("Check:[%03X]", extraData->GetType());
 
-			TESObjectREFR * targetRef = nullptr;
+			NiPointer<TESObjectREFR> targetRef;
 			const char *className = GetObjectClassName(extraData);
 			if (extraData->GetType() == kExtraData_Count)
 				_MESSAGE("%02X %s (%d)", extraData->GetType(), className, ((ExtraCount*)extraData)->count);
@@ -82,7 +82,7 @@ void DumpExtraData(BSExtraData* extraData)
 			else if (extraData->GetType() == kExtraData_AshPileRef)
 			{
 				UInt32 handle = ((ExtraAshPileRef*)extraData)->refHandle;
-				if (LookupREFRByHandle(&handle, &targetRef))
+				if (LookupREFRByHandle(handle, targetRef))
 					_MESSAGE("%02X %s AshRef(Handle)=%08X(%d)", extraData->GetType(), className, targetRef->formID, handle);
 				else
 					_MESSAGE("%02X %s AshRef(Handle)=?", extraData->GetType(), className);

@@ -69,7 +69,7 @@ int UserlistLoad()
 
 	if (!formlist)
 	{
-		UInt8 modIndex = PluginUtils::GetOrderIDByModName("AutoHarvestSE.esp");
+		UInt8 modIndex = PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp");
 		if (modIndex == 255)
 			return -1;
 		UInt32 formID = 0x0333c;
@@ -179,11 +179,11 @@ TESForm* GetLineForm(const std::string &str, char delim)
 		return nullptr;
 
 	StringUtils::ToUpper(fileName);
-	if ((fileName.find(".ESM", 0) == std::string::npos) && (fileName.find(".ESP", 0) == std::string::npos))
+	if ((fileName.find(".ESM", 0) == std::string::npos) && (fileName.find(".ESP", 0) == std::string::npos) && (fileName.find(".ESL", 0) == std::string::npos))
 		return nullptr;
 
-	UInt32 modIndex = DataHandler::GetSingleton()->GetLoadedModIndex(fileName.c_str());
-	if (modIndex == 255)
+	UInt32 modIndex = PluginUtils::GetLoadedModIndex(fileName.c_str());
+	if (modIndex == 0xFF)
 		return nullptr;
 
 	TESForm* pForm = nullptr;

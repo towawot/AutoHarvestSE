@@ -15,7 +15,6 @@
 #include <algorithm>    // std::sort
 #include "BaseExtraListEx.h"
 
-
 bool IsBossContainer(TESObjectREFR* refr)
 {
 	if (!refr)
@@ -47,15 +46,16 @@ TESObjectREFR* GetAshPile(TESObjectREFR* refr)
 	if (!refr)
 		return nullptr;
 
-	TESObjectREFR * ashRef = nullptr;
+	NiPointer<TESObjectREFR> ashRef;
 	BaseExtraList* extraList = &refr->extraData;
 	if (!extraList)
 		return nullptr;
 
 	ExtraAshPileRef* exAsh = static_cast<ExtraAshPileRef*>(extraList->GetByType(kExtraData_AshPileRef));
 	if (exAsh && exAsh->refHandle != 0)
-		LookupREFRByHandle(&(exAsh->refHandle), &ashRef);
-
+	{
+		LookupREFRByHandle(exAsh->refHandle, ashRef);
+	}
 	return ashRef;
 }
 
@@ -143,8 +143,8 @@ bool TESObjectREFRx::IsQuestItem(SInt32 questitemDefinition)
 	if (handle == *(g_invalidRefHandle.GetPtr()))
 		return false;
 
-	TESObjectREFR * targetRef = nullptr;
-	LookupREFRByHandle(&handle, &targetRef);
+	NiPointer<TESObjectREFR> targetRef;
+	LookupREFRByHandle(handle, targetRef);
 
 	if (!targetRef)
 		targetRef = this;

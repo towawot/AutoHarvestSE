@@ -189,11 +189,21 @@ namespace PluginUtils
 		return (thisForm) ? thisForm->formID >> 24 : 0xFF;
 	}
 
-	UInt8 GetOrderIDByModName(std::string name)
+	UInt8 GetLoadedModIndex(const char* espName)
 	{
-		DataHandler* dhnd = *g_dataHandler;
-		return (!dhnd || name.empty()) ? 0xFF : dhnd->GetLoadedModIndex(name.c_str());
+		const ModInfo* info = DataHandler::GetSingleton()->LookupModByName(espName);
+		if (!info)
+			return 0xFF;
+
+		if (info->IsLight())
+		{
+			//‚¢‚Â‚©‘Î‰ž‚·‚é
+			return 0xFF;
+		}
+
+		return info->GetPartialIndex();
 	}
+
 }
 
 namespace StringUtils

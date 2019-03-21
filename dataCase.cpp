@@ -134,7 +134,7 @@ bool DataCase::GetTSV(std::unordered_set<TESForm*> *tsv, const char* fileName)
 		auto vec = StringUtils::Split(str, '\t');
 		std::string modName = vec[0];
 
-		UInt8 modIndex = PluginUtils::GetOrderIDByModName(vec[0]);
+		UInt8 modIndex = PluginUtils::GetLoadedModIndex(vec[0].c_str());
 		if (modIndex == 0xFF)
 			continue;
 
@@ -176,7 +176,7 @@ bool DataCase::GetTSV(std::vector<TESSound*> *tsv, const char* fileName)
 		auto vec = StringUtils::Split(str, '\t');
 		std::string modName = vec[0];
 
-		UInt8 modIndex = PluginUtils::GetOrderIDByModName(vec[0]);
+		UInt8 modIndex = PluginUtils::GetLoadedModIndex(vec[0].c_str());
 		if (modIndex == 0xFF)
 			continue;
 

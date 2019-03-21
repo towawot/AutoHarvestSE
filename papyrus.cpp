@@ -403,7 +403,7 @@ namespace papyrus
 		if (!listForm)
 		{
 			UInt32 listID = 0x0333c;
-			listID |= DataHandler::GetSingleton()->GetLoadedModIndex("AutoHarvestSE.esp") << 24;
+			listID |= PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp") << 24;
 			listForm = DYNAMIC_CAST(LookupFormByID(listID), TESForm, BGSListForm);
 		}
 		if (!listForm)
@@ -427,7 +427,7 @@ namespace papyrus
 		if (!listForm)
 		{
 			UInt32 listID = 0x0333c;
-			listID |= DataHandler::GetSingleton()->GetLoadedModIndex("AutoHarvestSE.esp") << 24;
+			listID |= PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp") << 24;
 			listForm = DYNAMIC_CAST(LookupFormByID(listID), TESForm, BGSListForm);
 		}
 		if (!listForm)
@@ -453,7 +453,7 @@ namespace papyrus
 		if (!listForm)
 		{
 			UInt32 listID = 0x0333d;
-			listID |= DataHandler::GetSingleton()->GetLoadedModIndex("AutoHarvestSE.esp") << 24;
+			listID |= PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp") << 24;
 			listForm = DYNAMIC_CAST(LookupFormByID(listID), TESForm, BGSListForm);
 		}
 		if (!listForm)
@@ -477,7 +477,7 @@ namespace papyrus
 		if (!listForm)
 		{
 			UInt32 listID = 0x0333d;
-			listID |= DataHandler::GetSingleton()->GetLoadedModIndex("AutoHarvestSE.esp") << 24;
+			listID |= PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp") << 24;
 			listForm = DYNAMIC_CAST(LookupFormByID(listID), TESForm, BGSListForm);
 		}
 		if (!listForm)

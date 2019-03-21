@@ -1,6 +1,7 @@
 #include "skse64/GameData.h"
 #include "skse64/PapyrusVM.h"
 #include "TESQuestEx.h"
+#include "utils.h"
 
 TESQuestEx* GetTargetQuest(const char* espName, UInt32 questID)
 {
@@ -8,7 +9,7 @@ TESQuestEx* GetTargetQuest(const char* espName, UInt32 questID)
 	if (!result)
 	{
 		UInt32 formID = 0;
-		UInt32 idx = DataHandler::GetSingleton()->GetLoadedModIndex(espName);
+		UInt32 idx = PluginUtils::GetLoadedModIndex(espName);
 		if (idx != 0xFF)
 			formID = (idx << 24) | questID;
 

@@ -33,7 +33,8 @@ namespace PluginUtils
 	void SetBaseName(TESForm* pForm, const char* str);
 	std::string GetPluginName(UInt8 modIndex);
 	UInt8 GetModIndex(TESForm* thisForm);
-	UInt8 GetOrderIDByModName(std::string name);
+	//UInt8 GetOrderIDByModName(std::string name);
+	UInt8 GetLoadedModIndex(const char* espName);
 }
 
 namespace StringUtils

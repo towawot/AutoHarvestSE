@@ -48,7 +48,7 @@ bool SKSEPlugin_Query(const SKSEInterface * skse, PluginInfo * info)
 	}
 	
 	//_FormEx/GridCellArrayEx.cppのreleaseIDXも直す事!!
-	if (skse->runtimeVersion != RUNTIME_VERSION_1_5_62)
+	if (skse->runtimeVersion != RUNTIME_VERSION_1_5_73)
 	{
 		_MESSAGE("unsupported runtime version %08X", skse->runtimeVersion);
 		return false;
