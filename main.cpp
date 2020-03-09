@@ -19,6 +19,7 @@ void SKSEMessageHandler(SKSEMessagingInterface::Message* msg)
 		break;
 	case SKSEMessagingInterface::kMessage_NewGame:
 	case SKSEMessagingInterface::kMessage_PostLoadGame:
+		g_FirstRunForceDisable = true;
 		tasks::Init();
 		break;
 	}
@@ -40,7 +41,7 @@ bool SKSEPlugin_Query(const SKSEInterface * skse, PluginInfo * info)
 
 	info->infoVersion = PluginInfo::kInfoVersion;
 	info->name =	"AutoHarvestSE";
-	info->version = 1;
+	info->version = CURRENT_RELEASE_RUNTIME;
 
 	if (skse->isEditor)
 	{
@@ -48,7 +49,7 @@ bool SKSEPlugin_Query(const SKSEInterface * skse, PluginInfo * info)
 	}
 	
 	//_FormEx/GridCellArrayEx.cppのreleaseIDXも直す事!!
-	if (skse->runtimeVersion != RUNTIME_VERSION_1_5_80)
+	if (skse->runtimeVersion != CURRENT_RELEASE_RUNTIME)
 	{
 		_MESSAGE("unsupported runtime version %08X", skse->runtimeVersion);
 		return false;

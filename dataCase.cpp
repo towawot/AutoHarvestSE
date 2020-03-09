@@ -433,6 +433,7 @@ void DataCase::BuildList()
 	GetTSV(&lists.flora, "flora.tsv");
 	GetTSV(&lists.critter, "critter.tsv");
 	GetTSV(&lists.fieldcrop, "fieldcrop.tsv");
+	GetTSV(&lists.clutter, "clutter.tsv");
 	GetTSV(&lists.gem, "gem.tsv");
 	GetTSV(&lists.septim, "septim.tsv");
 	GetTSV(&lists.orevein, "orevein.tsv");
@@ -440,8 +441,6 @@ void DataCase::BuildList()
 	GetTSV(&lists.sound, "sound.tsv");
 	GetAmmoData();
 	GetBlockContainerData();
-	//GetUserlistData();
-	// TODO::skse64ƒoƒO?‚ ‚é‚Æv‚¤ 0.7.2Œ»İpapyrus‚Åˆ—
 
 	GetTranslationData();
 }

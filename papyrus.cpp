@@ -1,7 +1,4 @@
 #include "skse64/PluginAPI.h"
-//#include "skse64_common/skse_version.h"
-//#include "skse64/GameForms.h"
-//#include "skse64/GameReferences.h"
 #include "skse64/GameData.h"
 #include "skse64/PapyrusVM.h"
 #include "skse64/PapyrusNativeFunctions.h"
@@ -10,16 +7,17 @@
 #include "TESFormEx.h"
 #include "tasks.h"
 #include "iniSettings.h"
+#include "basketfile.h"
 #include "objects.h"
 #include "utils.h"
 #include "dataCase.h"
 #include <list>
 
 #include "GridCellArrayEx.h"
-#include "userlistUtil.h"
 #include "skse64/ScaleformLoader.h"
 
 bool g_SneakState = false;
+bool g_FirstRunForceDisable = true;
 
 namespace papyrus
 {
@@ -160,12 +158,18 @@ namespace papyrus
 
 		ini->DeleteInstance();
 		ini = INIFile::GetInstance()->GetInstance();
-		return (ini) ? true : false;;
+		return (ini) ? true : false;
 	}
 
 	SInt32 GetCloseReferences(StaticFunctionTag* base, SInt32 type1)
 	{
 		//typedef UInt32 FormID;
+
+		if (g_FirstRunForceDisable)
+		{
+			g_FirstRunForceDisable = false;
+			return 0;
+		}
 
 		UInt32 result = 0;
 
@@ -221,6 +225,7 @@ namespace papyrus
 			return 0;
 
 		double radius = ini->GetRadius(first);
+
 		for (Pair pair : lists)
 		{
 			double distance = pair.second;
@@ -267,20 +272,20 @@ namespace papyrus
 			{
 				ownership = CALL_MEMBER_FN(refr, IsOffLimits)();
 
-//#ifdef _DEBUG
-//				const char* str = ownership ? "true" : "false";
-//				_MESSAGE("***1 crimeCheck: %d ownership: %s", crimeCheck, str);
-//#endif
+#ifdef _DEBUG
+				const char* str = ownership ? "true" : "false";
+				_MESSAGE("***1 crimeCheck: %d ownership: %s", crimeCheck, str);
+#endif
 
 			}
 			else if (crimeCheck == 2.0)
 			{
 				ownership = CALL_MEMBER_FN(refr, IsOffLimits)();
 
-//#ifdef _DEBUG
-//				const char* str = ownership ? "true" : "false";
-//				_MESSAGE("***2 crimeCheck: %d ownership: %s", crimeCheck, str);
-//#endif
+#ifdef _DEBUG
+				const char* str = ownership ? "true" : "false";
+				_MESSAGE("***2 crimeCheck: %d ownership: %s", crimeCheck, str);
+#endif
 
 
 				if (!ownership)
@@ -290,10 +295,10 @@ namespace papyrus
 					{
 						ownership = refrEx->IsPlayerOwned();
 
-//#ifdef _DEBUG
-//						const char* str = ownership ? "true" : "false";
-//						_MESSAGE("***2-1 crimeCheck: %d ownership: %s", crimeCheck, str);
-//#endif
+#ifdef _DEBUG
+						const char* str = ownership ? "true" : "false";
+						_MESSAGE("***2-1 crimeCheck: %d ownership: %s", crimeCheck, str);
+#endif
 					}
 				}
 
@@ -304,10 +309,10 @@ namespace papyrus
 					{
 						ownership = cellEx->IsPlayerOwned();
 
-//#ifdef _DEBUG
-//						const char* str = ownership ? "true" : "false";
-//						_MESSAGE("***2-2 crimeCheck: %d ownership: %s", crimeCheck, str);
-//#endif
+#ifdef _DEBUG
+						const char* str = ownership ? "true" : "false";
+						_MESSAGE("***2-2 crimeCheck: %d ownership: %s", crimeCheck, str);
+#endif
 					}
 				}
 			}
@@ -318,10 +323,10 @@ namespace papyrus
 				if (refrEx)
 					ownership = refrEx->IsPlayerOwned();
 
-//#ifdef _DEBUG
-//				const char* str = ownership ? "true" : "false";
-//				_MESSAGE("***3 crimeCheck: %d ownership: %s", crimeCheck, str);
-//#endif
+#ifdef _DEBUG
+				const char* str = ownership ? "true" : "false";
+				_MESSAGE("***3 crimeCheck: %d ownership: %s", crimeCheck, str);
+#endif
 
 			}
 
@@ -381,114 +386,30 @@ namespace papyrus
 		DataCase::GetInstance()->ListsClear();
 	}
 
-	SInt32 SaveUserlist(StaticFunctionTag* base)
+	void SyncUserlist(StaticFunctionTag* base)
 	{
-		return UserlistSave();
+		BasketFile::GetSingleton()->SyncList(BasketFile::USERLIST);
+	}
+	bool SaveUserlist(StaticFunctionTag* base)
+	{
+		return BasketFile::GetSingleton()->SaveFile(BasketFile::USERLIST, "userlist.tsv");
+	}
+	bool LoadUserlist(StaticFunctionTag* base)
+	{
+		return BasketFile::GetSingleton()->LoadFile(BasketFile::USERLIST, "userlist.tsv");
 	}
 
-	SInt32 LoadUserlist(StaticFunctionTag* base)
+	void SyncExcludelist(StaticFunctionTag* base)
 	{
-		return UserlistLoad();
+		BasketFile::GetSingleton()->SyncList(BasketFile::EXCLUDELIST);
 	}
-
-	bool IsInUserlist(StaticFunctionTag* base, TESForm* item)
+	bool SaveExcludelist(StaticFunctionTag* base)
 	{
-		DataCase* data = DataCase::GetInstance();
-		return (data->lists.userlist.count(item) >= 1);
+		return BasketFile::GetSingleton()->SaveFile(BasketFile::EXCLUDELIST, "excludelist.tsv");
 	}
-
-	bool AddUserlist(StaticFunctionTag* base, TESForm* item)
+	bool LoadExcludelist(StaticFunctionTag* base)
 	{
-		static BGSListForm* listForm;
-		if (!listForm)
-		{
-			UInt32 listID = 0x0333c;
-			listID |= PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp") << 24;
-			listForm = DYNAMIC_CAST(LookupFormByID(listID), TESForm, BGSListForm);
-		}
-		if (!listForm)
-			return false;
-
-		DataCase* data = DataCase::GetInstance();
-		auto result = data->lists.userlist.insert(item);
-//		if (IsInUserlist(nullptr, item))
-//		{
-//#ifdef _DEBUG
-//			_MESSAGE("AddFormToList");
-//#endif
-//			CALL_MEMBER_FN(listForm, AddFormToList)(item);
-//		}
-		return result.second;
-	}
-
-	bool RemoveUserlist(StaticFunctionTag* base, TESForm* item)
-	{
-		static BGSListForm* listForm;
-		if (!listForm)
-		{
-			UInt32 listID = 0x0333c;
-			listID |= PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp") << 24;
-			listForm = DYNAMIC_CAST(LookupFormByID(listID), TESForm, BGSListForm);
-		}
-		if (!listForm)
-			return false;
-
-		DataCase* data = DataCase::GetInstance();
-		data->lists.userlist.erase(item);
-		//if (data->lists.userlist.erase(item) == 0)
-			//CALL_MEMBER_FN(listForm, RemoveFormFromList)(item);
-
-		return (data->lists.userlist.erase(item) == 0);
-	}
-
-	bool IsInExcludelist(StaticFunctionTag* base, TESForm* item)
-	{
-		DataCase* data = DataCase::GetInstance();
-		return (data->lists.excludelist.count(item) >= 1);
-	}
-
-	bool AddExcludelist(StaticFunctionTag* base, TESForm* item)
-	{
-		static BGSListForm* listForm;
-		if (!listForm)
-		{
-			UInt32 listID = 0x0333d;
-			listID |= PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp") << 24;
-			listForm = DYNAMIC_CAST(LookupFormByID(listID), TESForm, BGSListForm);
-		}
-		if (!listForm)
-			return false;
-
-		DataCase* data = DataCase::GetInstance();
-		auto result = data->lists.excludelist.insert(item);
-		//		if (IsInUserlist(nullptr, item))
-		//		{
-		//#ifdef _DEBUG
-		//			_MESSAGE("AddFormToList");
-		//#endif
-		//			CALL_MEMBER_FN(listForm, AddFormToList)(item);
-		//		}
-		return result.second;
-	}
-
-	bool RemoveExcludelist(StaticFunctionTag* base, TESForm* item)
-	{
-		static BGSListForm* listForm;
-		if (!listForm)
-		{
-			UInt32 listID = 0x0333d;
-			listID |= PluginUtils::GetLoadedModIndex("AutoHarvestSE.esp") << 24;
-			listForm = DYNAMIC_CAST(LookupFormByID(listID), TESForm, BGSListForm);
-		}
-		if (!listForm)
-			return false;
-
-		DataCase* data = DataCase::GetInstance();
-		data->lists.excludelist.erase(item);
-		//if (data->lists.userlist.erase(item) == 0)
-		//CALL_MEMBER_FN(listForm, RemoveFormFromList)(item);
-
-		return (data->lists.excludelist.erase(item) == 0);
+		return BasketFile::GetSingleton()->LoadFile(BasketFile::EXCLUDELIST, "excludelist.tsv");
 	}
 
 	BSFixedString GetTranslation(StaticFunctionTag* base, BSFixedString key)
@@ -533,6 +454,12 @@ namespace papyrus
 		return result.c_str();
 	}
 
+	//bool Pickup(StaticFunctionTag* base, TESObjectREFR* refr)
+	//{
+
+	//	player->pickup
+	//}
+
 }
 
 void papyrus::RegisterFuncs(VMClassRegistry* registry)
@@ -576,21 +503,18 @@ void papyrus::RegisterFuncs(VMClassRegistry* registry)
 		new NativeFunction0<StaticFunctionTag, void>("ListClear", "AutoHarvestSE", papyrus::ListClear, registry));
 
 	registry->RegisterFunction(
-		new NativeFunction0<StaticFunctionTag, SInt32>("SaveUserlist", "AutoHarvestSE", papyrus::SaveUserlist, registry));
+		new NativeFunction0<StaticFunctionTag, void>("SyncUserlist", "AutoHarvestSE", papyrus::SyncUserlist, registry));
 	registry->RegisterFunction(
-		new NativeFunction0<StaticFunctionTag, SInt32>("LoadUserlist", "AutoHarvestSE", papyrus::LoadUserlist, registry));
+		new NativeFunction0<StaticFunctionTag, bool>("SaveUserlist", "AutoHarvestSE", papyrus::SaveUserlist, registry));
 	registry->RegisterFunction(
-		new NativeFunction1<StaticFunctionTag, bool, TESForm*>("IsInUserlist", "AutoHarvestSE", papyrus::IsInUserlist, registry));
+		new NativeFunction0<StaticFunctionTag, bool>("LoadUserlist", "AutoHarvestSE", papyrus::LoadUserlist, registry));
+
 	registry->RegisterFunction(
-		new NativeFunction1<StaticFunctionTag, bool, TESForm*>("AddUserlist", "AutoHarvestSE", papyrus::AddUserlist, registry));
+		new NativeFunction0<StaticFunctionTag, void>("SyncExcludelist", "AutoHarvestSE", papyrus::SyncExcludelist, registry));
 	registry->RegisterFunction(
-		new NativeFunction1<StaticFunctionTag, bool, TESForm*>("RemoveUserlist", "AutoHarvestSE", papyrus::RemoveUserlist, registry));
+		new NativeFunction0<StaticFunctionTag, bool>("SaveExcludelist", "AutoHarvestSE", papyrus::SaveExcludelist, registry));
 	registry->RegisterFunction(
-		new NativeFunction1<StaticFunctionTag, bool, TESForm*>("IsInExcludelist", "AutoHarvestSE", papyrus::IsInExcludelist, registry));
-	registry->RegisterFunction(
-		new NativeFunction1<StaticFunctionTag, bool, TESForm*>("AddExcludelist", "AutoHarvestSE", papyrus::AddExcludelist, registry));
-	registry->RegisterFunction(
-		new NativeFunction1<StaticFunctionTag, bool, TESForm*>("RemoveExcludelist", "AutoHarvestSE", papyrus::RemoveExcludelist, registry));
+		new NativeFunction0<StaticFunctionTag, bool>("LoadExcludelist", "AutoHarvestSE", papyrus::LoadExcludelist, registry));
 
 	registry->RegisterFunction(
 		new NativeFunction1<StaticFunctionTag, BSFixedString, BSFixedString>("GetTranslation", "AutoHarvestSE", papyrus::GetTranslation, registry));

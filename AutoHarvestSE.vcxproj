@@ -153,6 +153,7 @@
     <ClCompile Include="..\skse64\Translation.cpp" />
     <ClCompile Include="AlchemyItemEx.cpp" />
     <ClCompile Include="BaseExtraListEx.cpp" />
+    <ClCompile Include="basketfile.cpp" />
     <ClCompile Include="containerLister.cpp" />
     <ClCompile Include="debugs.cpp" />
     <ClCompile Include="EnchantmentItemEx.cpp" />
@@ -168,7 +169,6 @@
     <ClCompile Include="GridCellArrayEx.cpp" />
     <ClCompile Include="TESObjectARMOEx.cpp" />
     <ClCompile Include="TESQuestEx.cpp" />
-    <ClCompile Include="userlistUtil.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="TESObjectWEAPEx.cpp" />
   </ItemGroup>
@@ -208,6 +208,7 @@
     <ClInclude Include="..\skse64\Translation.h" />
     <ClInclude Include="AlchemyItemEx.h" />
     <ClInclude Include="BaseExtraListEx.h" />
+    <ClInclude Include="basketfile.h" />
     <ClInclude Include="containerLister.h" />
     <ClInclude Include="debugs.h" />
     <ClInclude Include="EnchantmentItemEx.h" />
@@ -223,7 +224,6 @@
     <ClInclude Include="GridCellArrayEx.h" />
     <ClInclude Include="TESObjectARMOEx.h" />
     <ClInclude Include="TESQuestEx.h" />
-    <ClInclude Include="userlistUtil.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="TESObjectWEAPEx.h" />
   </ItemGroup>

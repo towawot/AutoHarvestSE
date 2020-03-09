@@ -148,12 +148,12 @@ double TESFormEx::GetWeight()
 	return pWeight->weight;
 }
 
-UInt32 TESFormEx::GetWorth()
+double TESFormEx::GetWorth()
 {
 	if (!this)
 		return 0;
 
-	UInt32 result = 0;
+	double result = 0;
 
 	if (formType == kFormType_Ammo || formType == kFormType_Projectile)
 	{

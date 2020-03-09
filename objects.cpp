@@ -8,6 +8,7 @@
 #include "utils.h"
 #include "objects.h"
 #include "dataCase.h"
+#include "basketfile.h"
 #include "containerLister.h"
 #include "TESFormEx.h"
 #include <string>
@@ -31,10 +32,24 @@ bool IsBossContainer(TESObjectREFR* refr)
 bool IsContainerLocked(TESObjectREFR* refr)
 {
 	if (!refr)
-		return true;
+		return false;
 
 	BaseExtraList* extraList = &refr->extraData;
-	return (extraList && extraList->HasType(kExtraData_Lock)) ? true : false;
+	if (!extraList)
+		return false;
+	if (!extraList->HasType(kExtraData_Lock))
+		return false;
+		
+	ExtraLock* exLock = static_cast<ExtraLock*>(extraList->GetByType(kExtraData_Lock));
+
+	if (exLock->lock->flags == REFR_LOCK::Flag::kLocked)
+		return true;
+
+	return false;
+	//BaseExtraList* extraList = &refr->extraData;
+	//return (extraList && extraList->HasType(kExtraData_Lock)) ? true : false;
+
+
 }
 
 TESObjectREFR* GetAshPile(TESObjectREFR* refr)
@@ -374,7 +389,7 @@ ObjectType ClassifyType(TESForm * baseForm, bool ignoreUserlist)
 		//return ObjectType::unknown;
 		return ObjectType::container;
 	}
-	else if (!ignoreUserlist && data->lists.userlist.count(baseForm) >= 1)
+	else if (!ignoreUserlist && BasketFile::GetSingleton()->IsinList(BasketFile::USERLIST ,baseForm))
 	{
 		return ObjectType::userlist;
 	}

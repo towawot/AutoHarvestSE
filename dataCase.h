@@ -39,9 +39,6 @@ public:
 		std::unordered_set<TESForm*> septim;
 		std::unordered_set<TESForm*> clutter;
 		std::unordered_set<TESForm*> orevein;
-
-		std::unordered_set<TESForm*> userlist;
-		std::unordered_set<TESForm*> excludelist;
 	} lists;
 
 	bool UnlockTask(TESObjectREFR* refr);
@@ -59,7 +56,6 @@ private:
 
 	bool GetTSV(std::unordered_set<TESForm*> *tsv, const char* fileName);
 	bool GetTSV(std::vector<TESSound*> *tsv, const char* fileName);
-	//void GetUserlistData(void);
 	void GetBlockContainerData(void);
 	void GetAmmoData(void);
 	void GetTranslationData(void);

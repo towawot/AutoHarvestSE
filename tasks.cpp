@@ -14,6 +14,7 @@
 #include "dataCase.h"
 #include "iniSettings.h"
 #include "containerLister.h"
+#include "basketfile.h"
 #include "sound.h"
 #include "debugs.h"
 
@@ -92,12 +93,18 @@ void SearchTask::Run()
 
 		if (objType == ObjectType::unknown)
 		{
+#ifdef _DEBUG
+			_MESSAGE("objType == ObjectType::unknown\nreturn");
+#endif
 			data->lists.blockForm.insert(m_refr->baseForm);
 			return;
 		}
 
-		if (data->lists.excludelist.count(m_refr->baseForm) >= 1)
+		if (BasketFile::GetSingleton()->IsinList(BasketFile::EXCLUDELIST, m_refr->baseForm))
 		{
+#ifdef _DEBUG
+			_MESSAGE("m_refr->baseForm >= 1\nreturn");
+#endif
 			data->lists.blockForm.insert(m_refr->baseForm);
 			return;
 		}
@@ -159,35 +166,47 @@ void SearchTask::Run()
 		SInt32 value = m_ini->GetObjectSetSettings(m_first, m_second, typeName.c_str());
 		if (value == 0)
 		{
+#ifdef _DEBUG
+			_MESSAGE("value == 0\nreturn");
+#endif
 			data->lists.blockRefr.insert(m_refr);
 			return;
 		}
 
+#ifdef _DEBUG
+		_MESSAGE("--------------------");
+#endif
 		double valueVW = m_ini->GetObjectSetSettings(m_first, INIFile::SecondaryType::valueWeight, typeName.c_str());
+#ifdef _DEBUG
+		_MESSAGE("--------------------");
+#endif
 
 		if (valueVW > 0)
 		{
-			UInt32 worth = refrEx->GetWorth();
+			double worth = refrEx->GetWorth();
 			double weight = refrEx->GetWeight();
 			weight = (weight > 0) ? weight : 1;
 
 			double vw = (worth > 0 && weight > 0) ? worth / weight : 0.0;
 
-#ifdef _DEBUG2
+#ifdef _DEBUG
 			const char* name = CALL_MEMBER_FN(refrEx, GetReferenceName)();
 			TESFormEx* formEx = static_cast<TESFormEx*>(m_refr->baseForm);
-			UInt32 worthB = formEx->GetWorth();
+			double worthB = formEx->GetWorth();
 			double weightB = formEx->GetWeight();
 
 			_MESSAGE("* %s(%08x)", name, refrEx->formID);
-			_MESSAGE("base->worth=%d  weight=%0.2f", worthB, weightB);
-			_MESSAGE("refr->worth=%d  weight=%0.2f", worth, weight);
-			_MESSAGE("VW=%0.2f",  vw);
+			_MESSAGE("base->worth=%0.2f  weight=%0.2f", worthB, weightB);
+			_MESSAGE("refr->worth=%0.2f  weight=%0.2f", worth, weight);
+			_MESSAGE("VW=%0.2f valueVW=%0.2f",  vw, valueVW);
 			_MESSAGE("* ");
 #endif
 
 			if (vw < valueVW)
 			{
+#ifdef _DEBUG
+				_MESSAGE("vw < valueVW\nreturn");
+#endif
 				data->lists.blockRefr.insert(m_refr);
 				return;
 			}
@@ -200,6 +219,10 @@ void SearchTask::Run()
 			SupplementEventFunctor2 argCount(m_refr, subEvent2_replaceItems, refrEx->GetItemCount() - 1);
 			registry->QueueEvent(m_aliasHandle, &supplementEvent2, &argCount);
 		}
+
+#ifdef _DEBUG
+		_MESSAGE("queue event");
+#endif
 
 		LootEventFunctor args(m_refr, static_cast<SInt32>(objType), refrEx->GetItemCount(), isSilent);
 		registry->QueueEvent(m_aliasHandle, &eventName, &args);
@@ -299,20 +322,11 @@ void SearchTask::Run()
 			}
 		}
 
-		//__DebugMessage("| Task::Container::GetTimeController");
-
-		int disableContainerAnimation = static_cast<int>(m_ini->GetConfigSettings(m_first, "disableContainerAnimation"));
-		if (disableContainerAnimation != 1)
-		{
-			if (refrEx->GetTimeController())
-			{
-				SupplementEventFunctor1 argAnim(m_refr, subEvent_chestAnimation);
-				registry->QueueEvent(m_aliasHandle, &supplementEvent1, &argAnim);
-			}
-		}
 		
 		//__DebugMessage("| Task::Container::ItemCheckLoop");
 
+
+		int count = 0;
 		for (auto node : itemMap)
 		{
 			TESFormEx* itemEx = static_cast<TESFormEx*>(node.first);
@@ -324,7 +338,7 @@ void SearchTask::Run()
 			if (maxCount == 0)
 				continue;
 
-			if (data->lists.excludelist.count(node.first) >= 1)
+			if (BasketFile::GetSingleton()->IsinList(BasketFile::EXCLUDELIST, node.first))
 			{
 				data->lists.blockForm.insert(node.first);
 				continue;
@@ -376,16 +390,26 @@ void SearchTask::Run()
 
 			ContainerLootEventFunctor args(m_refr, itemEx, static_cast<SInt32>(objType), maxCount, sound, isSilent);
 			registry->QueueEvent(m_aliasHandle, &eventNameContainerLoot, &args);
+			count += 1;
 
 			//__DebugMessage("| Task::Container::ItemCheckLoop::next");
 		}
-		//TODO:ActivateRefChildren
 
-		//if (itemMap.size() > 0)
-		//{
-		//	SupplementEventFunctor1 argAnim(m_refr, subEvent_containerUnlock);
-		//	(*g_skyrimVM)->GetClassRegistry()->QueueEvent(m_aliasHandle, &supplementEvent1, &argAnim);
-		//}
+		if (count >= 1)
+		{
+			//__DebugMessage("| Task::Container::GetTimeController");
+
+			int disableContainerAnimation = static_cast<int>(m_ini->GetConfigSettings(m_first, "disableContainerAnimation"));
+			if (disableContainerAnimation != 1)
+			{
+				if (refrEx->GetTimeController())
+				{
+					SupplementEventFunctor1 argAnim(m_refr, subEvent_chestAnimation);
+					registry->QueueEvent(m_aliasHandle, &supplementEvent1, &argAnim);
+				}
+			}
+		}
+
 		return;
 	}
 	else if (m_second == INIFile::SecondaryType::deadbodies)
@@ -470,7 +494,7 @@ void SearchTask::Run()
 
 			//__DebugMessage("| Task::deadbodies::ItemCheckLoop::ClassifyType");
 
-			if (data->lists.excludelist.count(node.first) >= 1)
+			if (BasketFile::GetSingleton()->IsinList(BasketFile::EXCLUDELIST, node.first))
 			{
 				data->lists.blockForm.insert(node.first);
 				continue;
@@ -485,8 +509,6 @@ void SearchTask::Run()
 				data->lists.blockRefr.insert(m_refr);
 				continue;
 			}
-
-			//__DebugMessage("| Task::deadbodies::ItemCheckLoop::valueVW");
 
 			double valueVW = m_ini->GetObjectSetSettings(m_first, INIFile::SecondaryType::valueWeight, typeName.c_str());
 			if (valueVW > 0)

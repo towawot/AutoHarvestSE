@@ -1,10 +1,5 @@
 #pragma once
 
-//#include "skse64/GameThreads.h"
-
-//#include "objects.h"
-//#include "iniSettings.h"
-
 enum
 {
 	subEvent_glowObject = 1,

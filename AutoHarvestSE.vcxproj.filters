@@ -134,10 +134,10 @@
     <ClCompile Include="BaseExtraListEx.cpp">
       <Filter>_FormEx</Filter>
     </ClCompile>
-    <ClCompile Include="userlistUtil.cpp" />
     <ClCompile Include="TESFormEx.cpp">
       <Filter>_FormEx</Filter>
     </ClCompile>
+    <ClCompile Include="basketfile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h" />
@@ -275,10 +275,10 @@
     <ClInclude Include="BaseExtraListEx.h">
       <Filter>_FormEx</Filter>
     </ClInclude>
-    <ClInclude Include="userlistUtil.h" />
     <ClInclude Include="TESFormEx.h">
       <Filter>_FormEx</Filter>
     </ClInclude>
+    <ClInclude Include="basketfile.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">

@@ -65,6 +65,9 @@ bool INIFile::CreateObjectSetSettingsMap(PrimaryType first, SecondaryType second
 	std::sort(list.begin(), list.end());
 	if (!SetINIData(&list, &objectSetMap[first][second]))
 	{
+#ifdef _DEBUG
+		_MESSAGE("");
+#endif
 		//objectSetMap.insert(std::make_pair("flora", 0.0));
 	}
 	return !objectSetMap[first][second].empty();
@@ -74,9 +77,27 @@ double INIFile::GetObjectSetSettings(PrimaryType first, SecondaryType second, st
 	if (!IsType(first) || !IsType(second))
 		return 0.0;
 
+	if (objectSetMap[first][second].empty())
+		return 0.0;
+
 	std::string tmp = str;
 	StringUtils::ToLower(tmp);
-	return 	(objectSetMap[first][second].count(tmp) >= 1) ? objectSetMap[first][second].at(tmp) : 0.0;
+
+#ifdef _DEBUG
+	_MESSAGE("%d %d tom::%s", first, second, tmp.c_str());
+#endif
+
+	auto itr = objectSetMap[first][second].find(tmp.c_str());
+	if (itr != objectSetMap[first][second].end())
+	{
+#ifdef _DEBUG
+		_MESSAGE("itr->second %0.2f", itr->second);
+#endif
+		return itr->second;
+	}
+	//return 	(objectSetMap[first][second].count(tmp) >= 1) ? objectSetMap[first][second].at(tmp) : 0.0;
+
+	return 0.0;
 }
 
 
@@ -143,6 +164,10 @@ bool INIFile::SetINIData(std::vector<std::string> *list, std::unordered_map<std:
 		if (!key.empty() && value != 0)
 		{
 			map->insert(std::make_pair(key.c_str(), value));
+		}
+		else
+		{
+			map->insert(std::make_pair(key.c_str(), 0.0));
 		}
 	}
 	return !map->empty();

@@ -10,7 +10,7 @@ public:
 	SInt16 GetMaxCharge(void);
 	UInt32 GetGoldValue(void);
 	double GetWeight(void);
-	UInt32 GetWorth(void);
+	double GetWorth(void);
 };
 
 bool IsPlayable(TESForm* pForm);

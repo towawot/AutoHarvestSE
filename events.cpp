@@ -2,17 +2,10 @@
 //#include "skse64/GameRTTI.h"
 //#include "skse64/GameData.h"
 #include "skse64/PapyrusArgs.h"
-//#include "skse64/GameThreads.h"
-//#include "common/IMemPool.h"
 #include "skse64/GameEvents.h"
 #include "skse64/GameReferences.h"
 #include "skse64/PapyrusVM.h"
 #include "events.h"
-//#include "TESFormEx.h"
-//#include "objects.h"
-//#include "dataCase.h"
-//#include "iniSettings.h"
-//#include "containerLister.h"
 
 
 LootEventFunctor::LootEventFunctor(TESObjectREFR* refr, SInt32 type, SInt32 count, bool silent)
